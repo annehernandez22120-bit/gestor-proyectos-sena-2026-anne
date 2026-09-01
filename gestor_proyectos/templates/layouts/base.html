@@ -1,145 +1,499 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Gestor de Proyectos{% endblock %}</title>
 
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+
                     colors: {
-                        'dark-purple': {
-                            950: '#0b0614',
-                            900: '#140c24',
-                            800: '#23153c',
-                            700: '#3a2063',
-                            500: '#8b5cf6',
-                            300: '#c4b5fd',
-                            100: '#ede9fe',
+
+                        'sakura': {
+                            950: '#4a202a',
+                            900: '#632936',
+                            800: '#823b4b',
+                            700: '#a94d61',
+                            600: '#c96176',
+                            500: '#e57d90',
+                            400: '#f1889b',
+                            300: '#f99aaa',
+                            200: '#fdb4bf',
+                            100: '#ffccd4',
+                            50: '#fff1f4',
                         },
+
                     },
+
                     fontFamily: {
+
                         'jp-serif': ['Noto Serif JP', 'serif'],
+
                         'sans-refined': ['Plus Jakarta Sans', 'sans-serif'],
+
                     },
+
+                    keyframes: {
+
+                        'sparkle': {
+                            '0%, 100%': {
+                                opacity: '0.25',
+                                transform: 'translateY(0) scale(0.8) rotate(0deg)'
+                            },
+                            '50%': {
+                                opacity: '1',
+                                transform: 'translateY(-10px) scale(1.15) rotate(12deg)'
+                            },
+                        },
+
+                        'sparkle-slow': {
+                            '0%, 100%': {
+                                opacity: '0.15',
+                                transform: 'translate(0, 0) scale(0.7)'
+                            },
+                            '50%': {
+                                opacity: '0.8',
+                                transform: 'translate(8px, -12px) scale(1)'
+                            },
+                        },
+
+                        'float-sakura': {
+                            '0%, 100%': {
+                                transform: 'translateY(0) rotate(-2deg)'
+                            },
+                            '50%': {
+                                transform: 'translateY(-5px) rotate(2deg)'
+                            },
+                        },
+
+                    },
+
+                    animation: {
+
+                        'sparkle': 'sparkle 3s ease-in-out infinite',
+
+                        'sparkle-slow': 'sparkle-slow 5s ease-in-out infinite',
+
+                        'float-sakura': 'float-sakura 6s ease-in-out infinite',
+
+                    },
+
                 }
             }
         }
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+    <!-- ESTILOS DECORATIVOS -->
+    <style>
+
+        /* Brillito */
+        .sakura-sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            color: #ffffff;
+            text-shadow:
+                0 0 5px rgba(255,255,255,.9),
+                0 0 12px rgba(255,188,202,.9);
+        }
+
+        /* Ramas de Sakura */
+        .sakura-branch {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+            opacity: .55;
+            filter: drop-shadow(0 5px 10px rgba(166,72,95,.12));
+        }
+
+        .sakura-flower {
+            position: absolute;
+            font-size: 20px;
+            filter: drop-shadow(0 2px 4px rgba(166,72,95,.18));
+        }
+
+        /* Línea de rama */
+        .branch-line {
+            position: absolute;
+            height: 5px;
+            border-radius: 999px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #9e5968,
+                #b86b7b
+            );
+            transform-origin: left center;
+        }
+
+    </style>
+
 </head>
-<body class="antialiased text-slate-300 min-h-screen flex flex-col bg-dark-purple-950 font-['Plus_Jakarta_Sans'] relative overflow-x-hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-dark-purple-700 [&::-webkit-scrollbar-thumb]:rounded-full">
 
-    <!-- luces de fondo, fijas detrás de todo el contenido -->
-    <div class="pointer-events-none fixed -top-40 -left-32 w-[32rem] h-[32rem] bg-purple-600/25 rounded-full blur-[130px] z-0"></div>
-    <div class="pointer-events-none fixed top-1/3 -right-40 w-[28rem] h-[28rem] bg-fuchsia-500/20 rounded-full blur-[130px] z-0"></div>
-    <div class="pointer-events-none fixed bottom-0 left-1/4 w-[26rem] h-[26rem] bg-violet-700/25 rounded-full blur-[140px] z-0"></div>
 
-    <!-- textura sutil de grano -->
-    <div class="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.04)_1px,transparent_0)] bg-[size:24px_24px] z-0"></div>
+<body class="antialiased text-sakura-900 min-h-screen flex flex-col bg-sakura-50 font-['Plus_Jakarta_Sans'] relative overflow-x-hidden [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-sakura-300 [&::-webkit-scrollbar-thumb]:rounded-full">
 
-    <!-- Navbar -->
-    <nav class="relative z-20 bg-dark-purple-900/70 backdrop-blur-md border-b border-white/10 sticky top-0 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- ===================================================== -->
+    <!-- FONDO DECORATIVO -->
+    <!-- ===================================================== -->
+
+    <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+
+
+        <!-- Resplandor superior izquierdo -->
+        <div class="absolute -top-40 -left-40 w-[34rem] h-[34rem] rounded-full bg-sakura-200/45 blur-[120px]">
+        </div>
+
+
+        <!-- Resplandor superior derecho -->
+        <div class="absolute top-1/4 -right-40 w-[30rem] h-[30rem] rounded-full bg-sakura-300/30 blur-[120px]">
+        </div>
+
+
+        <!-- Resplandor inferior -->
+        <div class="absolute bottom-0 left-1/3 w-[30rem] h-[25rem] rounded-full bg-sakura-100/60 blur-[110px]">
+        </div>
+
+
+        <!-- Destellos -->
+        <span class="sakura-sparkle animate-sparkle text-lg" style="top: 15%; left: 12%;">
+            ✦
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle-slow text-sm" style="top: 28%; left: 25%;">
+            ✧
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle text-xs" style="top: 42%; left: 8%;">
+            ✦
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle-slow text-lg" style="top: 63%; left: 18%;">
+            ✧
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle text-sm" style="top: 78%; left: 7%;">
+            ✦
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle-slow text-xs" style="top: 12%; right: 18%;">
+            ✧
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle text-lg" style="top: 35%; right: 10%;">
+            ✦
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle-slow text-sm" style="top: 54%; right: 22%;">
+            ✧
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle text-xs" style="top: 75%; right: 8%;">
+            ✦
+        </span>
+
+        <span class="sakura-sparkle animate-sparkle-slow text-sm" style="top: 88%; right: 27%;">
+            ✧
+        </span>
+
+
+        <!-- Textura muy sutil -->
+        <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_1px_1px,rgba(229,125,144,0.12)_1px,transparent_0)] bg-[size:28px_28px]">
+        </div>
+
+    </div>
+
+
+
+    <!-- ===================================================== -->
+    <!-- RAMA SAKURA IZQUIERDA -->
+    <!-- ===================================================== -->
+
+    <div class="sakura-branch hidden lg:block left-[-55px] top-[90px] w-[240px] h-[420px] animate-float-sakura">
+
+        <div class="branch-line w-[270px] top-[80px] left-0 rotate-[35deg]"></div>
+
+        <div class="branch-line w-[160px] top-[155px] left-[45px] rotate-[65deg]"></div>
+
+        <div class="branch-line w-[130px] top-[215px] left-[100px] rotate-[25deg]"></div>
+
+        <div class="branch-line w-[120px] top-[275px] left-[65px] rotate-[75deg]"></div>
+
+
+        <span class="sakura-flower top-[65px] left-[115px]">🌸</span>
+
+        <span class="sakura-flower top-[120px] left-[175px]">🌸</span>
+
+        <span class="sakura-flower top-[175px] left-[105px]">🌸</span>
+
+        <span class="sakura-flower top-[210px] left-[190px]">🌸</span>
+
+        <span class="sakura-flower top-[270px] left-[115px]">🌸</span>
+
+        <span class="sakura-flower top-[330px] left-[170px]">🌸</span>
+
+    </div>
+
+
+
+    <!-- ===================================================== -->
+    <!-- RAMA SAKURA DERECHA -->
+    <!-- ===================================================== -->
+
+    <div class="sakura-branch hidden lg:block right-[-65px] top-[180px] w-[250px] h-[430px] scale-x-[-1] animate-float-sakura">
+
+        <div class="branch-line w-[280px] top-[70px] left-0 rotate-[35deg]"></div>
+
+        <div class="branch-line w-[165px] top-[145px] left-[50px] rotate-[65deg]"></div>
+
+        <div class="branch-line w-[140px] top-[215px] left-[100px] rotate-[25deg]"></div>
+
+        <div class="branch-line w-[125px] top-[285px] left-[70px] rotate-[75deg]"></div>
+
+
+        <span class="sakura-flower top-[55px] left-[120px]">🌸</span>
+
+        <span class="sakura-flower top-[115px] left-[180px]">🌸</span>
+
+        <span class="sakura-flower top-[175px] left-[105px]">🌸</span>
+
+        <span class="sakura-flower top-[220px] left-[190px]">🌸</span>
+
+        <span class="sakura-flower top-[280px] left-[120px]">🌸</span>
+
+        <span class="sakura-flower top-[340px] left-[175px]">🌸</span>
+
+    </div>
+
+
+
+    <!-- ===================================================== -->
+    <!-- NAVBAR -->
+    <!-- ===================================================== -->
+
+    <nav class="relative z-30 bg-white/70 backdrop-blur-xl border-b border-sakura-200/70 sticky top-0 shadow-[0_4px_25px_rgba(166,72,95,0.08)]">
+
+        <div class="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
+
             <div class="flex items-center justify-between h-16">
+
+
                 <!-- Logo y marca -->
+
                 <div class="flex items-center gap-3">
+
                     <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 bg-gradient-to-br from-purple-400 to-fuchsia-600 rounded-lg flex items-center justify-center shadow-[0_0_20px_-4px_rgba(192,132,252,0.7)] p-1">
-                            <img src="{% static 'img/logo.png' %}" alt="" class="w-full h-full rounded-md object-cover">
+
+                        <div class="w-9 h-9 bg-gradient-to-br from-sakura-400 to-sakura-500 rounded-xl flex items-center justify-center shadow-[0_0_20px_-4px_rgba(229,125,144,0.65)] p-1 ring-2 ring-white/70">
+
+                            <img src="{% static 'img/logo.png' %}" alt="" class="w-full h-full rounded-lg object-cover">
+
                         </div>
-                        <span class="text-lg font-semibold text-white tracking-tight hidden sm:block">
+
+                        <span class="text-lg font-semibold text-sakura-900 tracking-tight hidden sm:block">
+
                             Gestor de Proyectos
+
                         </span>
+
                     </div>
+
                 </div>
+
+
 
                 <!-- Enlaces de navegación -->
+
                 <div class="flex items-center gap-1 sm:gap-2">
+
                     <a href="{% url 'home' %}"
-                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-dark-purple-300 hover:text-white hover:bg-white/5 hover:-translate-y-px rounded-lg transition-all duration-150">
+
+                       class="inline-flex items-center gap-1.5 px-4 sm:px-4 py-2 text-sm font-medium text-sakura-700 hover:text-sakura-950 hover:bg-sakura-100/70 hover:-translate-y-px rounded-xl transition-all duration-200">
+
                         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
                             <path d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+
                         </svg>
+
                         <span class="hidden xs:inline">Inicio</span>
-                    </a>
-                    <a href="{% url 'proyectos' %}"
-                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-dark-purple-300 hover:text-white hover:bg-white/5 hover:-translate-y-px rounded-lg transition-all duration-150">
-                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
-                        </svg>
-                        <span class="hidden xs:inline">Proyectos</span>
-                    </a>
-                    <a href="{% url 'nuevo_proyecto' %}"
-                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-dark-purple-300 hover:text-white hover:bg-white/5 hover:-translate-y-px rounded-lg transition-all duration-150">
-                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10" />
-                            <path d="M12 8v8" />
-                            <path d="M8 12h8" />
-                            <path d="M16 6l2 2" />
-                            <path d="M18 6l-2 2" opacity="0.5" />
-                        </svg>
-                        <span class="hidden xs:inline">Nuevo Proyecto</span>
+
                     </a>
 
-                    <span class="w-px h-6 bg-white/10 mx-1 hidden sm:block"></span>
+
+
+                    <a href="{% url 'proyectos' %}"
+
+                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-sakura-700 hover:text-sakura-950 hover:bg-sakura-100/70 hover:-translate-y-px rounded-xl transition-all duration-200">
+
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
+                            <path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
+
+                        </svg>
+
+                        <span class="hidden xs:inline">Proyectos</span>
+
+                    </a>
+
+
+
+                    <a href="{% url 'nuevo_proyecto' %}"
+
+                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-sakura-700 hover:text-sakura-950 hover:bg-sakura-100/70 hover:-translate-y-px rounded-xl transition-all duration-200">
+
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
+                            <circle cx="12" cy="12" r="10" />
+
+                            <path d="M12 8v8" />
+
+                            <path d="M8 12h8" />
+
+                            <path d="M16 6l2 2" />
+
+                            <path d="M18 6l-2 2" opacity="0.5" />
+
+                        </svg>
+
+                        <span class="hidden xs:inline">Nuevo Proyecto</span>
+
+                    </a>
+
+
+
+                    <span class="w-px h-6 bg-sakura-200 mx-1 hidden sm:block"></span>
+
+
 
                     <a href="{% url 'acerca-de' %}"
-                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-dark-purple-300 hover:text-white hover:bg-white/5 hover:-translate-y-px rounded-lg transition-all duration-150">
+
+                       class="inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 text-sm font-medium text-sakura-700 hover:text-sakura-950 hover:bg-sakura-100/70 hover:-translate-y-px rounded-xl transition-all duration-200">
+
                         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+
+                            <path d="M11.25 11.25l.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+
                         </svg>
+
                         <span class="hidden sm:inline">Acerca de</span>
+
                     </a>
+
                 </div>
+
             </div>
+
         </div>
+
     </nav>
 
-    <!-- Contenido principal -->
+
+
+    <!-- ===================================================== -->
+    <!-- CONTENIDO PRINCIPAL -->
+    <!-- ===================================================== -->
+
     <main class="relative z-10 flex-1 w-full flex items-start justify-center py-6 md:py-8">
+
         <div class="w-full max-w-4xl px-4 sm:px-6 lg:px-8">
+
             {% block content %}
+
             {% endblock %}
+
         </div>
+
     </main>
 
-    <!-- Footer -->
-    <footer class="relative z-20 mt-auto border-t border-white/10 bg-dark-purple-900/50 backdrop-blur-md">
+
+
+    <!-- ===================================================== -->
+    <!-- FOOTER -->
+    <!-- ===================================================== -->
+
+    <footer class="relative z-20 mt-auto border-t border-sakura-200/70 bg-white/60 backdrop-blur-xl">
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-dark-purple-300">
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-sakura-700">
+
+
                 <span class="flex items-center gap-2">
-                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 21v-6m0 0-3-3m3 3 3-3M3 9.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1-.75-.75V9.75ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+
+                    <svg class="w-4 h-4 flex-shrink-0 text-sakura-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
+                        <path d="M12 21v-6m0 0-3-3m3 3 3-3M3 9.75a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-.75.75H3.75a.75.75 0 0 1-.75-.75V9.75ZM21 12a9 9 0 1 1-18 0Z" />
+
                     </svg>
+
                     2026 · Gestor de Proyectos
+
                 </span>
+
+
+
                 <span class="flex items-center gap-3">
+
                     <span class="flex items-center gap-1">
-                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
+                        <svg class="w-4 h-4 flex-shrink-0 text-sakura-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
                             <path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+
                         </svg>
+
                         Jose Oviedo
+
                     </span>
-                    <span class="hidden sm:inline text-dark-purple-700">|</span>
+
+
+
+                    <span class="hidden sm:inline text-sakura-300">|</span>
+
+
+
                     <span class="hidden sm:flex items-center gap-1">
-                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
+                        <svg class="w-4 h-4 flex-shrink-0 text-sakura-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+
                             <path d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6h1.5m-1.5 3h1.5m-1.5 3h1.5M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+
                         </svg>
+
                         SENA · Centro de Comercio y Servicios
+
                     </span>
+
                 </span>
+
             </div>
+
         </div>
+
     </footer>
 
+
 </body>
+
 </html>
