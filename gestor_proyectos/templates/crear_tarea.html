@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Crear Tarea</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-purple': {
+                            950: '#0b0614',
+                            900: '#140c24',
+                            800: '#23153c',
+                            700: '#3a2063',
+                            500: '#8b5cf6',
+                            300: '#c4b5fd',
+                            100: '#ede9fe',
+                        },
+                    },
+                    fontFamily: {
+                        'jp-serif': ['Noto Serif JP', 'serif'],
+                        'sans-refined': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-dark-purple-950 text-dark-purple-100 flex items-center justify-center p-4">
+
+    <div class="w-full max-w-xl bg-dark-purple-900 rounded-2xl shadow-2xl shadow-black/40 border border-dark-purple-800 p-6 md:p-10">
+
+        <div class="flex items-center gap-4 mb-8 border-b border-dark-purple-800 pb-6">
+
+            <div class="w-14 h-14 bg-dark-purple-800/60 border border-dark-purple-700 rounded-xl flex items-center justify-center text-dark-purple-300">
+
+                <i class="fa-solid fa-list-check text-2xl"></i>
+
+            </div>
+
+            <div>
+
+                <span class="text-xs tracking-widest uppercase text-dark-purple-300 block mb-1">
+                    タスク — Task Management
+                </span>
+
+                <h1 class="text-2xl md:text-3xl font-jp-serif font-light text-white">
+                    Agregar tarea a:
+                    <span class="text-dark-purple-500">
+                        {{ proyecto.nombre }}
+                    </span>
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <form method="post" class="space-y-6">
+
+            {% csrf_token %}
+
+
+            <div class="space-y-1.5">
+
+                <label for="titulo"
+                       class="block text-sm font-medium text-dark-purple-300">
+
+                    Titulo de la tarea:
+
+                </label>
+
+                <input type="text"
+                       name="titulo"
+                       id="titulo"
+                       placeholder="Ej. Diseñar una base de datos"
+                       required
+                       class="w-full px-4 py-3 bg-dark-purple-950 border border-dark-purple-800 rounded-xl text-dark-purple-100 placeholder:text-dark-purple-700 text-sm focus:border-dark-purple-500 focus:ring-2 focus:ring-dark-purple-500/20 focus:outline-none transition-all">
+
+            </div>
+
+
+            <div class="space-y-1.5">
+
+                <label for="prioridad"
+                       class="block text-sm font-medium text-dark-purple-300">
+
+                    Prioridad
+
+                </label>
+
+                <select name="prioridad"
+                        id="prioridad"
+                        class="w-full px-4 py-3 bg-dark-purple-950 border border-dark-purple-800 rounded-xl text-dark-purple-100 text-sm focus:border-dark-purple-500 focus:ring-2 focus:ring-dark-purple-500/20 focus:outline-none">
+
+                    {% for valor, etiqueta in prioridad_choices %}
+
+                        <option value="{{ valor }}" {% if valor == 'MEDIA' %} selected {% endif %}>
+                            {{ etiqueta }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <div class="space-y-1.5">
+
+                <label for="estado"
+                       class="block text-sm font-medium text-dark-purple-300">
+
+                    Estado
+
+                </label>
+
+                <select name="estado"
+                        id="estado"
+                        class="w-full px-4 py-3 bg-dark-purple-950 border border-dark-purple-800 rounded-xl text-dark-purple-100 text-sm focus:border-dark-purple-500 focus:ring-2 focus:ring-dark-purple-500/20 focus:outline-none">
+
+                    {% for valor, etiqueta in estado_choices %}
+
+                        <option value="{{ valor }}" {% if valor == 'PENDIENTE' %} selected {% endif %}>
+                            {{ etiqueta }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <button type="submit"
+                    class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-dark-purple-500 text-white text-sm font-medium rounded-xl hover:bg-purple-500 transition-all duration-200 shadow-lg shadow-purple-950/30">
+
+                <i class="fa-solid fa-check"></i>
+
+                Guardar
+
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

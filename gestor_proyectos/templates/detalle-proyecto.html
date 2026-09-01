@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle del Proyecto · Gestor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-purple': {
+                            950: '#0b0614',
+                            900: '#140c24',
+                            800: '#23153c',
+                            700: '#3a2063',
+                            500: '#8b5cf6',
+                            300: '#c4b5fd',
+                            100: '#ede9fe',
+                        },
+                    },
+                    fontFamily: {
+                        'jp-serif': ['Noto Serif JP', 'serif'],
+                        'sans-refined': ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image:
+                radial-gradient(circle at 15% 0%, rgba(139, 92, 246, 0.10), transparent 40%),
+                radial-gradient(circle at 85% 100%, rgba(139, 92, 246, 0.08), transparent 45%);
+        }
+
+        .detalle-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .detalle-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+            border-color: rgba(139, 92, 246, 0.35);
+        }
+
+        .tarea-row {
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+        .tarea-row:hover {
+            border-color: rgba(139, 92, 246, 0.4);
+            background-color: rgba(139, 92, 246, 0.05);
+        }
+
+        .btn-icon {
+            transition: transform 0.15s ease;
+        }
+        .tarea-row:hover .btn-icon {
+            transform: translateX(2px);
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3a2063; border-radius: 999px; }
+    </style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8 bg-dark-purple-950 text-dark-purple-100 antialiased">
+    <div class="w-full max-w-3xl bg-dark-purple-900/80 backdrop-blur rounded-3xl shadow-2xl shadow-black/50 p-6 md:p-10 border border-dark-purple-800">
+
+        <!-- CABECERA -->
+        <div class="flex items-start sm:items-center gap-4 mb-8 border-b border-dark-purple-800 pb-6">
+            <div class="bg-dark-purple-800/60 p-3 rounded-2xl text-dark-purple-500 border border-dark-purple-700 shrink-0">
+                <i class="fa-regular fa-folder-open text-2xl"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+                <span class="text-[11px] tracking-[0.2em] uppercase text-dark-purple-300/80 block mb-1.5">
+                    プロジェクト — Project Details
+                </span>
+                <h1 class="text-2xl md:text-3xl font-jp-serif font-light text-white tracking-wide leading-tight">
+                    Detalle del proyecto
+                </h1>
+                <p class="text-sm text-dark-purple-300 font-light mt-1">
+                    Información completa del proyecto seleccionado
+                </p>
+            </div>
+            <!-- BOTONES -->
+            <div class="flex items-center gap-2 shrink-0">
+                <a href="{% url 'editar_proyecto' proyecto.id %}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-dark-purple-500 hover:bg-purple-500 text-white text-sm font-medium rounded-xl transition-all shadow-sm shadow-dark-purple-500/30 hover:shadow-md hover:shadow-dark-purple-500/40">
+                    <i class="fa-solid fa-pen-to-square text-xs"></i>
+                    <span class="hidden sm:inline">
+                        Editar
+                    </span>
+                </a>
+                <a href="{% url 'proyectos' %}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2.5 bg-dark-purple-950 text-dark-purple-300 text-sm font-medium rounded-xl border border-dark-purple-800 hover:bg-dark-purple-800 hover:text-white hover:border-dark-purple-700 transition-all">
+                    <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                    <span class="hidden sm:inline">
+                        Volver
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- INFORMACIÓN DEL PROYECTO -->
+        <div class="detalle-card bg-dark-purple-950/60 rounded-2xl p-6 md:p-8 border border-dark-purple-800 shadow-sm">
+            <!-- NOMBRE -->
+            <div class="flex items-start gap-4 mb-6">
+                <div class="bg-dark-purple-800/60 p-2.5 rounded-xl text-dark-purple-500 border border-dark-purple-700 mt-0.5 shrink-0">
+                    <i class="fa-regular fa-floppy-disk"></i>
+                </div>
+                <div class="min-w-0">
+                    <h2 class="text-xl md:text-2xl font-jp-serif font-medium text-white break-words">
+                        {{ proyecto.nombre }}
+                    </h2>
+                    <span class="inline-flex items-center gap-1 mt-2 text-xs font-mono bg-dark-purple-800/80 text-dark-purple-300 px-3 py-1 rounded-full border border-dark-purple-700">
+                        <i class="fa-solid fa-hashtag text-[10px]"></i>
+                        ID: {{ proyecto.id }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <div class="flex items-start gap-4 mb-6 border-t border-dark-purple-800/80 pt-5">
+                <div class="bg-dark-purple-900 p-2.5 rounded-xl text-dark-purple-300 mt-0.5 border border-dark-purple-800 shrink-0">
+                    <i class="fa-solid fa-circle-chevron-right text-sm"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold text-dark-purple-300/90 uppercase tracking-wider">
+                        Descripción
+                    </p>
+                    <p class="text-base text-dark-purple-100/90 leading-relaxed mt-1.5 break-words">
+                        {{ proyecto.descripcion }}
+                    </p>
+                </div>
+            </div>
+
+            <!-- DURACIÓN -->
+            <div class="flex items-start gap-4 border-t border-dark-purple-800/80 pt-5">
+                <div class="bg-dark-purple-900 p-2.5 rounded-xl text-dark-purple-300 mt-0.5 border border-dark-purple-800 shrink-0">
+                    <i class="fa-regular fa-clock text-sm"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-dark-purple-300/90 uppercase tracking-wider">
+                        Duración estimada
+                    </p>
+                    <p class="text-base text-dark-purple-100 font-medium mt-1.5 flex flex-wrap items-center gap-2">
+                        <span class="bg-dark-purple-800 px-3 py-1 rounded-full text-dark-purple-300 border border-dark-purple-700">
+                            {{ proyecto.duracion }}
+                        </span>
+                        <span class="text-xs text-dark-purple-300/60 font-light">
+                            (tiempo estimado)
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAREAS -->
+        <div class="mt-6 bg-dark-purple-900/60 rounded-2xl p-6 md:p-8 border border-dark-purple-800 shadow-sm">
+            <div class="flex items-center justify-between gap-4 mb-5">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-dark-purple-500 text-sm"></i>
+                    <h2 class="text-xl font-jp-serif font-medium text-white">
+                        Tareas del proyecto
+                    </h2>
+                </div>
+                <!-- NUEVA TAREA -->
+                <a href="{% url 'crear_tarea' proyecto.id %}"
+                   class="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 bg-dark-purple-500 text-white text-sm font-medium rounded-xl border border-dark-purple-500 hover:bg-purple-500 transition-colors shadow-sm shadow-dark-purple-500/30">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span class="hidden sm:inline">
+                        Nueva tarea
+                    </span>
+                </a>
+            </div>
+
+            <ul class="space-y-2.5">
+                {% for tarea in proyecto.tareas.all %}
+                <li class="tarea-row bg-dark-purple-950/70 border border-dark-purple-800 rounded-xl px-4 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <p class="text-white font-medium truncate">
+                            {{ tarea.titulo }}
+                        </p>
+                        <p class="text-xs text-dark-purple-300/90 mt-1.5 flex flex-wrap items-center gap-1.5">
+                            <span class="inline-flex items-center gap-1 bg-dark-purple-800/70 text-dark-purple-300 px-2 py-0.5 rounded-full border border-dark-purple-700">
+                                <i class="fa-solid fa-flag text-[10px] text-dark-purple-500"></i>
+                                {{ tarea.get_prioridad_display }}
+                            </span>
+                            <span class="inline-flex items-center gap-1 bg-dark-purple-800/70 text-dark-purple-300 px-2 py-0.5 rounded-full border border-dark-purple-700">
+                                <i class="fa-solid fa-circle-dot text-[10px] text-dark-purple-500"></i>
+                                {{ tarea.get_estado_display }}
+                            </span>
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-2 shrink-0">
+                        <!-- AVANZAR ESTADO -->
+                        <form action="{% url 'avanzar_estado_tarea' tarea.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="inline-flex items-center gap-1.5 px-3 py-2 bg-dark-purple-800 hover:bg-dark-purple-700 text-dark-purple-300 hover:text-white text-xs font-medium rounded-lg border border-dark-purple-700 transition-all">
+                                {{ tarea.get_estado_display }}
+                                {% if tarea.estado == 'COMPLETADA' %}
+                                    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                                {% else %}
+                                    <i class="fa-solid fa-arrow-right btn-icon"></i>
+                                {% endif %}
+                            </button>
+                        </form>
+                        <!-- COMPLETAR RÁPIDO -->
+                        <form action="{% url 'avanzar_rapido' tarea.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit"
+                            class="inline-flex items-center gap-1.5 px-3 py-2 bg-dark-purple-950 hover:bg-emerald-900/40 text-dark-purple-300 hover:text-emerald-300 text-xs font-medium rounded-lg border border-dark-purple-800 hover:border-emerald-700/60 transition-all">
+                            <i class="fa-regular fa-square-check"></i>
+                            <span class="hidden sm:inline">
+                                Marcar Completada
+                            </span>
+                        </button>
+                    </form>
+                    <form action="{%url 'eliminar_tarea' tarea.id%}" method="POST">
+                        {%csrf_token%}
+                        <button type="submit" onclick="return confirm('¿Seguro de eliminar la tarea?')" class="inline-flex items-center gap-1.5 px-3 py-2 bg-dark-purple-950 hover:bg-emerald-900/40 text-dark-purple-300 hover:text-emerald-300 text-xs font-medium rounded-lg border border-dark-purple-800 hover:border-emerald-700/60 transition-all">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </form>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="text-sm text-dark-purple-300/70 py-6 text-center border border-dashed border-dark-purple-800 rounded-xl">
+                    <i class="fa-regular fa-clipboard block text-2xl mb-2 text-dark-purple-700"></i>
+                    Este proyecto aún no tiene tareas.
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- PIE -->
+        <div class="mt-6 text-xs text-dark-purple-300/60 flex justify-between items-center">
+            <span class="flex items-center gap-1.5">
+                <i class="fa-regular fa-circle-check text-dark-purple-500"></i>
+                Vista detallada
+            </span>
+            <a href="{% url 'proyectos' %}"
+               class="flex items-center gap-1.5 hover:text-dark-purple-300 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+                Ir a la lista
+            </a>
+        </div>
+    </div>
+</body>
+</html>

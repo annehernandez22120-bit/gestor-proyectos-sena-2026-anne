@@ -1,0 +1,74 @@
+{% extends 'layouts/base.html' %}
+
+{%block title%}
+Proyectos Activos
+{%endblock%}
+
+{% block content %}
+    <main class="max-w-3xl mx-auto">
+        <header class="mb-10 pb-6 border-b border-dark-purple-800 flex justify-between items-end">
+            <div>
+                <span class="text-xs tracking-widest uppercase text-dark-purple-300 font-medium block mb-1">
+                    プロジェクト — Project Management
+                </span>
+                <h1 class="text-3xl font-jp-serif font-light tracking-wide text-white">
+                    Proyectos
+                </h1>
+            </div>
+            <div class="text-right">
+                <span class="text-xs font-jp-serif text-dark-purple-300 bg-dark-purple-900 px-3 py-1 rounded-full border border-dark-purple-800">
+                    全 件
+                </span>
+            </div>
+        </header>
+        <section aria-label="Lista de proyectos">
+            {% if proyectos %}
+                <ul class="space-y-4">
+                    {% for proyecto in proyectos %}
+                        <li class="bg-dark-purple-900/70 p-6 rounded-lg border border-dark-purple-800 shadow-sm transition-all duration-200 hover:border-dark-purple-500 hover:bg-dark-purple-900">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                                <div class="space-y-2 flex-1">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-1 h-5 bg-dark-purple-500 rounded-full inline-block"></span>
+                                        <img src="{{ proyecto.imagen.url }}" alt="{{ proyecto.nombre }}" class="h-14 rounded-full">
+                                        <h2 class="text-lg font-jp-serif font-medium text-white">
+                                            {{ proyecto.nombre }}
+                                        </h2>
+                                        <span class="text-xs font-normal text-dark-purple-300 bg-dark-purple-800 px-2.5 py-0.5 rounded-full border border-dark-purple-700">
+                                            {{ proyecto.duracion }}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-dark-purple-300/80 font-light leading-relaxed pl-4">
+                                        {{ proyecto.descripcion }}
+                                    </p>
+                                </div>
+                                <div class="flex items-center gap-2 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-dark-purple-800 pl-4 sm:pl-0">
+                                    <a href="{%url 'ver_proyecto' proyecto.id%}"
+                                       class="text-xs font-medium text-dark-purple-300 hover:text-white px-3 py-1.5 rounded transition-colors hover:bg-dark-purple-800 border border-transparent hover:border-dark-purple-700">
+                                        詳細 (Ver)
+                                    </a>
+                                    <a href="{%url 'eliminar_proyecto' proyecto.id%}"
+                                       onclick="return confirm('¿Esta seguro de eliminar el proyecto?')"
+                                       class="text-xs font-medium text-rose-400 hover:text-rose-200 px-3 py-1.5 rounded transition-colors hover:bg-rose-950/50 border border-transparent hover:border-rose-900">
+                                        削除 (Eliminar)
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="text-center py-16 bg-dark-purple-900/40 rounded-lg border border-dashed border-dark-purple-800">
+                    <p class="text-dark-purple-300 text-sm font-jp-serif">
+                        無 — No hay proyectos registrados actualmente.
+                    </p>
+                </div>
+            {% endif %}
+        </section>
+        <footer class="mt-12 text-center text-xs text-dark-purple-300/50 font-light">
+            <span>
+                侘寂 — Simplicidad y armonía en la gestión.
+            </span>
+        </footer>
+    </main>
+{% endblock %}
